@@ -5,14 +5,31 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      userName: 'David'
+      userName: 'David', 
+      todoItems: [
+        {action: 'Buy Flowers', done: false}, 
+        {action: 'Fix car', done: false}, 
+        {action: 'Post letter', done: true}, 
+        {action: 'Ring  mum', done: false}
+      ], 
+      newItemText: ''
     }
   }
 
-  changeStateData = () => {
-    this.setState({
-      userName: this.state.userName === 'David' ? 'Jude' : 'David'
-    })
+  udpateNewTextValue = (event) => {
+    this.setState({newItemText: event.target.value}); 
+  }
+
+  createNewTodo = () => {
+    if (!this.state.todoItems.find(item => item.action === this.state.newItemText)) {
+      this.setState({
+        todoItems: [
+          ...this.state.todoItems, 
+          {action: this.state.newItemText, done: false}
+        ], 
+        newItemText: ''
+      }); 
+    }
   }
 
   render = () => {
@@ -20,11 +37,24 @@ export default class App extends Component {
       <div>
         <h4 className="bg-primary text-white text-center p-2">
           {this.state.userName}'s To Do List
+          ({this.state.todoItems.filter(t => !t.done).length} items to do)
         </h4>
 
-        <button className="btn btn-primary m-2" onClick={this.changeStateData}>
-          Change
-        </button>
+        <div className="container-fluid">
+          <div className="my-1">
+            <input 
+              className="form-control"
+              value={this.state.newItemText}
+              onChange={this.udpateNewTextValue}
+            />
+          </div>
+
+          <button 
+            className="btn btn-primary mt-1" 
+            onClick={this.createNewTodo}>
+              Add
+          </button>
+        </div>
       </div>
     )
   }
