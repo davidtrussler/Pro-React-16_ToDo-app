@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {TodoBanner} from './TodoBanner'; 
 
 export default class App extends Component {
   constructor(props) {
@@ -55,10 +56,7 @@ export default class App extends Component {
   render = () => {
     return (
       <div>
-        <h4 className="bg-primary text-white text-center p-2">
-          {this.state.userName}'s To Do List
-          ({this.state.todoItems.filter(t => !t.done).length} items to do)
-        </h4>
+        <TodoBanner name={this.state.userName} tasks={this.state.todoItems} />
 
         <div className="container-fluid">
           <div className="my-1">
