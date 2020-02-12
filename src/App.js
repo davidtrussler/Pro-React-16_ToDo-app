@@ -14,8 +14,7 @@ export default class App extends Component {
         {action: 'Fix car', done: false}, 
         {action: 'Post letter', done: true}, 
         {action: 'Ring  mum', done: false}
-      ], 
-      newItemText: ''
+      ]
     }
   }
 
@@ -23,12 +22,12 @@ export default class App extends Component {
     this.setState({newItemText: event.target.value}); 
   }
 
-  createNewTodo = () => {
-    if (!this.state.todoItems.find(item => item.action === this.state.newItemText)) {
+  createNewTodo = (task) => {
+    if (!this.state.todoItems.find(item => item.action === task)) {
       this.setState({
         todoItems: [
           ...this.state.todoItems, 
-          {action: this.state.newItemText, done: false}
+          {action: task, done: false}
         ], 
         newItemText: ''
       }); 
@@ -52,19 +51,7 @@ export default class App extends Component {
         <TodoBanner name={this.state.userName} tasks={this.state.todoItems} />
 
         <div className="container-fluid">
-          <div className="my-1">
-            <input 
-              className="form-control"
-              value={this.state.newItemText}
-              onChange={this.udpateNewTextValue}
-            />
-          </div>
-
-          <button 
-            className="btn btn-primary mt-1" 
-            onClick={this.createNewTodo}>
-              Add
-          </button>
+          <TodoCreator callback={this.createNewTodo} />
         </div>
 
         <table className="table table-striped table-bordered">
