@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {TodoBanner} from './TodoBanner'; 
+import {TodoCreator} from './TodoCreator'; 
+import {TodoRow} from './TodoRow'; 
 
 export default class App extends Component {
   constructor(props) {
@@ -41,16 +43,7 @@ export default class App extends Component {
 
   todoTableRows = () => this.state.todoItems.map(
     item => 
-      <tr key={item.action}>
-        <td>{item.action}</td>
-        <td>
-          <input 
-            type="checkbox" 
-            checked={item.done}
-            onChange={() => this.toggleTodo(item)}
-          />
-        </td>
-      </tr>
+      <TodoRow key={item.action} item={item} callback={this.toggleTodo} />
   ); 
 
   render = () => {
