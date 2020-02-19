@@ -32,7 +32,7 @@ export default class App extends Component {
           {action: task, done: false}
         ], 
         newItemText: ''
-      }); 
+      }, () => localStorage.setItem('todos', JSON.stringify(this.state))); 
     }
   }
 
@@ -46,6 +46,23 @@ export default class App extends Component {
     item => 
       <TodoRow key={item.action} item={item} callback={this.toggleTodo} />
   ); 
+
+  componentDidMount = () => {
+    let data = localStorage.getItem('todos'); 
+
+    this.setState(
+      data != null ? JSON.parse(data) : {
+        userName: 'David', 
+        todoItems: [
+          {action: 'Buy Flowers', done: false}, 
+          {action: 'Fix car', done: false}, 
+          {action: 'Post letter', done: true}, 
+          {action: 'Ring  mum', done: false}
+        ], 
+        showCompleted: true
+      }
+    ); 
+  }
 
   render = () => {
     return (
